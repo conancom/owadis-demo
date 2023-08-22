@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign in example • Pico.css</title>
+    <meta name="description" content="A minimalist layout for Login pages. Built with Pico CSS." />
+    <link rel="shortcut icon" href="https://picocss.com/favicon.ico" />
+    <link rel="canonical" href="https://picocss.com/examples/sign-in/" />
+
+    <!-- Pico.css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+
+    <!-- Custom styles for this example -->
+    <link rel="stylesheet" href="custom.css" />
+  </head>
+  <style>
+    .container{
+      display: flex;
+      justify-content: center; /* Center content horizontally */
+      align-items: center; /* Center content vertically */
+      height: 100vh; /* Use full viewport height */
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 128, 0, 0.9);
+      color: white;
+      padding: 20px;
+      padding-top: 40px;
+      width: 300px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Center horizontally */
+      line-height: 100%; /* Set line-height to match the height of the popup */
+    }
+  </style>
+
+  <body>
+
+    <main class="container">
+      <div class="centered-content">
+        <hgroup>
+          <h1>Sign in sample</h1>
+          <h2>A OWADIS Demo</h2>
+        </hgroup>
+        <form id="login-form">
+          <input
+            type="text"
+            name="Username"
+            placeholder="Username"
+            aria-label="Login"
+            autocomplete="nickname"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            aria-label="Password"
+            autocomplete="current-password"
+            required
+          />
+          <button type="submit" class="contrast">Login</button>
+        </form>
+      </div>
+      <div></div>
+    </main>
+  
+    <div class="popup" id="popup">
+      <p id="popup-message">Success!</p>
+    </div>
+  
+    <script>
+      const loginForm = document.getElementById('login-form');
+      const popup = document.getElementById('popup');
+      const popupMessage = document.getElementById('popup-message');
+  
+      loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+  
+        const formData = new FormData(loginForm);
+        const requestData = {};
+  
+        formData.forEach((value, key) => {
+          requestData[key] = value;
+        });
+  
+        try {
+          const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+          });
+  
+          if (response.ok) {
+            // Handle successful response
+            popupMessage.textContent = 'Success!';
+            popup.style.display = 'block';
+  
+            // Clear input fields
+            loginForm.reset();
+  
+            setTimeout(() => {
+              popup.style.display = 'none';
+            }, 2000); // Hide popup after 2 seconds
+          } else {
+            // Handle error response
+            console.error('Login failed');
+          }
+        } catch (error) {
+          console.error('An error occurred:', error);
+        }
+      });
+    </script>
+    
+  </body>
+</html>
