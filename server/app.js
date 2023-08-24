@@ -21,41 +21,47 @@ app.post('/login', (req, res) => {
         const ip = `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`
         console.log(`ip:${ip}, user-identifier:UD11, name:frank, time-stamp:[${new Date()}], header:"GET /?username=${Username}&password=${password} HTTP/1.0", status:200`);
         console.log(`Open Redirect Attack detected by: ip:${ip}`);
+        return res.status(203).json({ message: 'Attacked' });
       }
 
       if(containsSubstring(Username, rfilfi) || containsSubstring(password, rfilfi)){
         const ip = `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`
         console.log(`ip:${ip}, user-identifier:UD11, name:frank, time-stamp:[${new Date()}], header:"GET /?username=${Username}&password=${password} HTTP/1.0", status:200`);
         console.log(`RFI/LFI detected by: ip:${ip}`);
+        return res.status(203).json({ message: 'Attacked' });
       }
 
       if(containsSubstring(Username, cmdinjection) || containsSubstring(password, cmdinjection)){
         const ip = `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`
         console.log(`ip:${ip}, user-identifier:UD11, name:frank, time-stamp:[${new Date()}], header:"GET /?username=${Username}&password=${password} HTTP/1.0", status:200`);
         console.log(`OS injection detected by: ip:${ip}`);
+        return res.status(203).json({ message: 'Attacked' });
       }
 
       if(containsSubstring(Username, sqli) || containsSubstring(password, sqli)){
         const ip = `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`
         console.log(`ip:${ip}, user-identifier:UD11, name:frank, time-stamp:[${new Date()}], header:"GET /?username=${Username}&password=${password} HTTP/1.0", status:200`);
         console.log(`SQL injection detected by: ip:${ip}`);
+        return res.status(203).json({ message: 'Attacked' });
       }
 
       if(containsSubstring(Username, xss) || containsSubstring(password, xss)){
         const ip = `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`
         console.log(`ip:${ip}, user-identifier:UD11, name:frank, time-stamp:[${new Date()}], header:"GET /?username=${Username}&password=${password} HTTP/1.0", status:200`);
         console.log(`Cross-Site Scripting detected by: ip:${ip}`);
+        return res.status(203).json({ message: 'Attacked' });
       }
 
       if(containsSubstring(Username, xee) || containsSubstring(password, xee)){
         const ip = `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`
         console.log(`ip:${ip}, user-identifier:UD11, name:frank, time-stamp:[${new Date()}], header:"GET /?username=${Username}&password=${password} HTTP/1.0", status:200`);
         console.log(`XML external entity attack detected by: ip:${ip}`);
+        return res.status(203).json({ message: 'Attacked' });
       }
       
-      res.status(200).json({ message: 'Login successful' });
+      return res.status(200).json({ message: 'Login successful' });
     } else {
-      res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
   });
 
